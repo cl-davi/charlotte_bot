@@ -7,24 +7,23 @@ module.exports = {
         .setName("wallet")
         .setDescription("Exibe a quantia de moedas que você possui")
         .addUserOption(
-            option => option.setName("usuario").setDescription("Selecione um usuário para ver a carteira").setRequired(false)
+            option => option.setName("usuario").setDescription("Selecione um usuário para ver a carteira").setRequired(false),
         ),
     async execute(interaction) {
-        const { options } = interaction;
+        let user = interaction.options.getUser("usuario");
 
-        const user = options.getUser("usuario" || interaction.user);
+        if (!user) user = interaction.user;
+
         let wallet = await db.get(`carteira_${user.id}`);
 
-        if (wallet == null) {
-            wallet = 0;
-        };
+        if (wallet === null) wallet = 0;
 
-        const embed = new EmbedBuilder().setColor("LuminousVividPink").setTitle("Carteira").setThumbnail(user.displayAvatarURL({ dynamic: true }));
+        const embed = new EmbedBuilder().setColor("LuminousVividPink").setTitle("Carteira");
 
         if (user.id === interaction.user.id) {
             interaction.reply({ embeds: [embed.setDescription(`Você possui \`${wallet}\` moedas em sua carteira`)] });
         } else {
-            interaction.reply({ embeds: [embed.setDescription(`O membro ${user.tag} possui ${wallet} moedas em sua carteira`)] });
+            interaction.reply({ embeds: [embed.setDescription(`O membro ${user} (\`${user.id}\`) possui ${wallet} moedas em sua carteira`)] });
         }
     },
 };
