@@ -61,7 +61,6 @@ module.exports = {
                         `**ID:** ${guild.id}`,
                         `**Dono:** <@${guild.ownerId}>`,
                         `**Idioma:** ${new Intl.DisplayNames(["pt-br"], { type: "language" }).of(guild.preferredLocale)}`,
-                        `**Vanity URL:** ${guild.vanityURL || "Nenhum"}`
                     ].join("\n")
                 },
                 {

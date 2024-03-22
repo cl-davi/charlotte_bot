@@ -1,20 +1,16 @@
 {
-  "name": "discord_bot",
+  "name": "charlotte_discord_bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "discord bot called Charlotte",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Davi Clemente",
   "license": "ISC",
   "dependencies": {
     "better-sqlite3": "^9.4.3",
     "discord.js": "^14.14.1",
-    "dotenv": "^16.4.5",
-    "ms": "^2.1.3",
-    "openai": "^4.29.2",
     "puppeteer": "^22.6.0",
     "quick.db": "^9.1.7"
   }
