@@ -16,8 +16,8 @@ module.exports = {
 
             interaction.reply({ embeds: [embed.setTitle("Daily já foi resgatado").setDescription(`Espere \`${time}\` para poder resgatar seu daily novamente!`)], ephemeral: true }); return;
         } else { cooldowns[interaction.user.id].lastCmd = Date.now() };
-        let quantia = Math.ceil(Math.random() * 500);
-        if (quantia < 50) quantia = quantia + 50;
+        let quantia = Math.ceil(Math.random() * 50);
+        if (quantia < 0) quantia = quantia + 5;
 
         await db.add(`carteira_${interaction.user.id}`, quantia);
 
