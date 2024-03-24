@@ -1,28 +1,37 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { QuickDB } = require('quick.db');
+
 const db = new QuickDB();
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pay')
-        .setDescription('Compra algo da lojinha')
+        .setDescription('Realiza um pagamento')
         .addUserOption(
-            option => option.setName('usuario').setDescription('Selecione o usuário para efetuar o pagamento').setRequired(true),
-        ).addIntegerOption(
-            option => option.setName('quantia').setDescription('Insira o valor que vai pagar').setRequired(true),
+            option => option.setName('usuario').setDescription('Selecione o membro').setRequired(true),
+        ).addNumberOption(
+            option => option.setName('quantia').setDescription('Quantia que vai enviar').setRequired(true),
         ),
     async execute(interaction) {
-        const user = interaction.options.getUser('usuario');
-        const amount = interaction.options.getInteger('quantia');
-        const wallet = db.get(`carteira_${interaction.user.id}`);
+        const { options } = interaction;
 
-        if (amount > wallet) {
-            interaction.reply({ content: `**Você não pode executar a transferência pois há apenas \`${wallet}\` moedinhas na sua carteira**`, ephemeral: true });
-        } else {
-            db.add(`carteira_${user.id}`, amount);
-            db.sub(`carteira_${interaction.user.id}`, amount);
+        let user = options.getUser('usuario');
+        let amount = options.getNumber('quantia');
 
-            interaction.reply({ content: `**Pagamento de R$\`${amount}\` efetuado com sucesso**`, ephemeral: true });   
+        let wallet = await db.get(`carteira_${interaction.user.id}`);
+
+        if (wallet === null) {
+            wallet = 0;
         }
+        if (user.id === interaction.user.id) {
+            await interaction.reply({ content: 'Você não pode enviar dinheiro para você mesmo.', ephemeral: true });
+        }
+        if (amount > wallet) {
+            await interaction.reply({ content: 'Saldo insuficiente para realizar a operação de pagamento.', ephemeral: true });
+        } else {
+            await db.add(`carteira_${user.id}`, amount);
+            await db.sub(`carteira_${interaction.user.id}`, amount);
+            await interaction.reply({ content: `O valor de ${amount} foi enviado para ${user} com sucesso.`, ephemeral: true });
+        };
     },
 };
