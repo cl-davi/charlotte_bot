@@ -21,6 +21,6 @@ module.exports = {
 
         await db.add(`carteira_${interaction.user.id}`, quantia);
 
-        interaction.reply({ embeds: [embed.setTitle("Daily já foi resgatado").setDescription(`Você resgatou \`${quantia}\` moedas diárias!`)] });
+        interaction.reply({ embeds: [embed.setTitle("Daily resgatado com sucesso").setDescription(`Você resgatou \`${quantia}\` moedas diárias!`)] });
     },
 };
