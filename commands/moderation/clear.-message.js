@@ -15,7 +15,7 @@ module.exports = {
         const messages = await channel.messages.fetch({
             limit: amount + 1,
         });
-        const response = new EmbedBuilder().setColor(0x5fb041);
+        const response = new EmbedBuilder().setColor("#DDA0DD");
 
         await channel.bulkDelete(amount, true).then(messages => {
             response.setDescription(`${messages.size} mensagens foram deletadas`);
