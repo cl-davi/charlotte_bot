@@ -49,7 +49,7 @@ module.exports = {
         ]);
 
         const embed = new EmbedBuilder()
-            .setColor("LuminousVividPink")
+            .setColor("#DDA0DD")
             .setTitle(`Informações do servidor ${guild.name}`)
             .setThumbnail(guild.bannerURL({ size: 1024 }))
             .setImage(guild.bannerURL({ size: 1024 }))
