@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const { QuickDB } = require('quick.db');
 
 const db = new QuickDB();
@@ -31,7 +31,7 @@ module.exports = {
         } else {
             await db.add(`carteira_${user.id}`, amount);
             await db.sub(`carteira_${interaction.user.id}`, amount);
-            await interaction.reply({ content: `O valor de ${amount} foi enviado para ${user} com sucesso.`, ephemeral: true });
+            await interaction.reply({ content: `O valor de **R$ ${amount}** foi enviado para ${user} com sucesso.`, ephemeral: true });
         };
     },
 };
