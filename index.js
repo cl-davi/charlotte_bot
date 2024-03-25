@@ -5,7 +5,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
 client.commands = new Collection();
+
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
@@ -34,6 +36,7 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
+
 module.exports = client;
 
 client.login(token);
