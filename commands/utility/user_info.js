@@ -14,7 +14,7 @@ module.exports = {
         const icon = user.displayAvatarURL();
         const tag = user.tag;
 
-        const embed = new EmbedBuilder().setColor("LuminousVividPink").setAuthor({ name: tag, iconURL: icon }).addFields(
+        const embed = new EmbedBuilder().setColor("#DDA0DD").setAuthor({ name: tag, iconURL: icon }).addFields(
             { name: "Nome", value: `${user}`, inline: false },
             { name: "Cargos", value: `${member.roles.cache.map(r => r).join(``)}`, inline: false },
             { name: "Data de entrada no servidor", value: `<t:${parseInt(member.joinedAt / 1000)}:R>`, inline: true },
