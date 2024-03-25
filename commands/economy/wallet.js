@@ -18,12 +18,12 @@ module.exports = {
 
         if (wallet === null) wallet = 0;
 
-        const embed = new EmbedBuilder().setColor("LuminousVividPink").setTitle("Carteira");
+        const embed = new EmbedBuilder().setColor("#DDA0DD").setTitle("Carteira");
 
         if (user.id === interaction.user.id) {
-            interaction.reply({ embeds: [embed.setDescription(`Você possui \`${wallet}\` moedas em sua carteira`)] });
+            interaction.reply({ embeds: [embed.setDescription(`Você possui **${wallet}** moedas em sua carteira`)] });
         } else {
-            interaction.reply({ embeds: [embed.setDescription(`O membro ${user} (\`${user.id}\`) possui \`${wallet}\` moedas em sua carteira`)] });
+            interaction.reply({ embeds: [embed.setDescription(`O membro ${user} (ID: \`${user.id}\`) possui **r$ ${wallet}** moedas em sua carteira`)] });
         }
     },
 };
