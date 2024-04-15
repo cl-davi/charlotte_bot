@@ -1,5 +1,6 @@
 const { REST, Routes } = require('discord.js');
 const { clientId, guildId, token } = require('./config.json');
+
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -37,7 +38,6 @@ const rest = new REST().setToken(token);
 			Routes.applicationGuildCommands(clientId, guildId),
 			{ body: commands },
 		);
-
 		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
 	} catch (error) {
 		// And of course, make sure you catch and log any errors!
