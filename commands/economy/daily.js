@@ -5,22 +5,60 @@ const ms = require("ms");
 const cooldowns = {};
 
 module.exports = {
-    data: new SlashCommandBuilder().setName('daily').setDescription("Resgate suas moedinhas diárias"),
+    data: new SlashCommandBuilder().setName('moedas').setDescription("Resgate suas moedas diárias"),
     async execute(interaction) {
-        if (!cooldowns[interaction.user.id]) cooldowns[interaction.user.id] = { lastCmd: null }; let ultCmd = cooldowns[interaction.user.id].lastCmd;
-        let timeOut = ms("1 day");
-        const embed = new EmbedBuilder().setColor("#DDA0DD").setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }));
-        if (ultCmd !== null && timeOut - (Date.now() - ultCmd) > 0) {
-            let time = ms(timeOut - (Date.now() - ultCmd)); let resta = [time.seconds, "segundos"];
-            if (resta[0] == 0) resta = ['alguns', 'milisegundos']; if (resta[0] == 1) resta = [time.seconds, "segundo"];
+        const channel = interaction.guild.channels.cache.get('1229515474799296652');
+        
+        if (interaction.channel.id !== '1229515474799296652') {
+            interaction.reply(`Você só pode utilizar este comando no canal ${channel}`);
+        } else {
+            if (!cooldowns[interaction.user.id]) {
+                cooldowns[interaction.user.id] = {
+                    lastCmd: null
+                };
+                let ultCmd = cooldowns[interaction.user.id].lastCmd;
+                let timeOut = ms("1 day");
 
-            interaction.reply({ embeds: [embed.setTitle("Daily indisponível").setDescription(`Espere \`${time}\` para poder resgatar seu daily novamente!`)], ephemeral: true }); return;
-        } else { cooldowns[interaction.user.id].lastCmd = Date.now() };
-        let quantia = Math.ceil(Math.random() * 100);
-        if (quantia < 0) quantia = quantia + 10;
+                const embed = new EmbedBuilder()
+                    .setColor("#4169E1")
+                    .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }));
 
-        await db.add(`carteira_${interaction.user.id}`, quantia);
+                if (ultCmd !== null && timeOut - (Date.now() - ultCmd) > 0) {
+                    let time = ms(timeOut - (Date.now() - ultCmd));
+                    let resta = [time.seconds, "segundos"];
 
-        interaction.reply({ embeds: [embed.setTitle("Daily resgatado com sucesso").setDescription(`Você resgatou \`${quantia}\` moedas diárias!`)] });
+                    if (resta[0] == 0) {
+                        resta = ['alguns', 'milisegundos']
+                    };
+                    if (resta[0] == 1) {
+                        resta = [time.seconds, "segundo"]
+                    };
+
+                    interaction.reply({
+                        embeds: [
+                            embed
+                                .setTitle("Moedas indisponíveis")
+                                .setDescription(`Espere ${time} para poder resgatar suas moedas novamente!`)
+                        ],
+                        ephemeral: true
+                    });
+                    return;
+                } else {
+                    cooldowns[interaction.user.id].lastCmd = Date.now()
+                };
+
+                let quantia = Math.ceil(Math.random() * 100);
+                if (quantia < 0) quantia = quantia + 10;
+
+                await db.add(`carteira_${interaction.user.id}`, quantia);
+                interaction.reply({
+                    embeds: [
+                        embed
+                            .setTitle("Moedas adquiridas com sucesso!")
+                            .setDescription(`Você resgatou **R$${quantia}** moedas diárias!`)
+                    ]
+                });
+            };
+        }
     },
 };
