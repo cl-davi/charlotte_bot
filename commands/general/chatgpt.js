@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { apikeyOpenAi } = require('../../config.json');
 const { OpenAI } = require('openai');
 
@@ -33,12 +33,19 @@ module.exports = {
         if (interaction.channel.id !== channel.id) {
             interaction.reply({ content: `Este comando só pode ser utilizado no canal: ${channel}`, ephemeral: true });
         } else {
+
+            const embed = new EmbedBuilder();
+
             const completion = await openai.chat.completions.create({
                 model: 'gpt-4',
                 messages: messages
             });
             const response = completion.choices[0].message.content;
-            await interaction.editReply(response);
+            await interaction.editReply(
+                {
+                    embeds: [embed.setTitle('ChatGPT').setDescription(`**PERGUNTA**\n${question}\n\n**RESPOSTA**\n${response}`).setColor('Random').setTimestamp()]
+                }
+            );
         };
     },
 };
