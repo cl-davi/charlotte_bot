@@ -12,7 +12,7 @@ module.exports = {
         const channel = interaction.guild.channels.cache.get('1229515474799296652');
 
         if (interaction.channel.id !== '1229515474799296652') {
-            interaction.reply(`Você só pode utilizar este comando no canal ${channel}`);
+            interaction.reply({ content: `Você só pode utilizar este comando no canal ${channel}`, ephemeral: true });
         } else {
             if (!cooldowns[interaction.user.id]) {
                 cooldowns[interaction.user.id] = {
