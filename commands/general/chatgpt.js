@@ -31,9 +31,13 @@ module.exports = {
         ];
 
         if (interaction.channel.id !== channel.id) {
-            interaction.reply({ content: `Este comando só pode ser utilizado no canal: ${channel}`, ephemeral: true });
+            interaction.editReply(
+                {
+                    content: `Este comando só pode ser utilizado no canal: ${channel}`,
+                    ephemeral: true
+                }
+            );
         } else {
-
             const embed = new EmbedBuilder();
 
             const completion = await openai.chat.completions.create({
