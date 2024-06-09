@@ -1,4 +1,5 @@
-config.json
+src/configuration
 node_modules
 json.sqlite
 package-lock.json
+discloud.config
